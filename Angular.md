@@ -705,18 +705,30 @@ Añade estos scripts a tu `package.json`:
 
 ## ✅ Checklist de Setup
 
-- [ ] Proyecto creado con `ng new`
-- [ ] Angular Material instalado
-- [ ] Estructura de carpetas creada
-- [ ] Routing con lazy loading configurado
-- [ ] Environments configurados
-- [ ] Header y Footer implementados
-- [ ] API Service creado
-- [ ] HTTP Interceptor configurado
-- [ ] ESLint + Prettier configurados
-- [ ] Sentry integrado
-- [ ] Tests unitarios básicos pasando
+- [X] Proyecto creado con `ng new`
+- [X] Angular Material instalado
+- [X] Estructura de carpetas creada
+- [X] Routing con lazy loading configurado
+- [X] Environments configurados
+- [X] Header y Footer implementados
+- [X] API Service creado
+- [X] HTTP Interceptor configurado
+- [X] ESLint + Prettier configurados
+- [X] Sentry integrado
+- [X] Tests unitarios básicos pasando
 
 ---
+
+# Puntos a tener en cuenta:
+
+Se puede corregir en los componentes el styleUrl => styleUrls para que funcione correctamente.
+Para que pase el test del app.spec.ts a algo como..
+    expect(compiled.querySelector('p')?.textContent).toContain('header works!');
+Así pasará el test y se confirmará que el header se renderiza correctamente dentro del app.html
+Se revisó que el proyecto hasta hora funciona con npm run start y se puede acceder a localhost:4200 sin errores.
+Estoy asumiendo que todos los componentes serían standalone, no tomaré en cuenta si no lo son porque el proyecto se creó con Angular 21.2 y el CLI ya genera componentes standalone por defecto.
+toca hacer un npm audit fix, para corregir las vulnerabilidades de los paquetes instalados, hay cosas que pueden ser corregidas sin romper nada, pero otras requieren un --force y pueden romper cosas, así que lo dejo a tu criterio. Ya aquí no es problema del boilerplate, sino de las dependencias que se instalaron.
+para crear las URLs tienes que irte al archivo routes.ts y agregar las rutas, luego me gusta crear los componentes con el CLI, pero también puedes crearlos manualmente, lo importante es que sigas la estructura modular que se propuso.
+
 
 > **Hane Boilerplates** — Angular Setup Guide
