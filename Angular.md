@@ -17,6 +17,8 @@
 - [Environments](#-environments)
 - [Herramientas Adicionales](#-herramientas-adicionales)
 - [Scripts Útiles](#-scripts-útiles)
+- [Notas del Setup](#-notas-del-setup)
+- [TODO](#-todo)
 
 ---
 
@@ -719,16 +721,76 @@ Añade estos scripts a tu `package.json`:
 
 ---
 
-# Puntos a tener en cuenta:
+## 📝 Notas del Setup
 
-Se puede corregir en los componentes el styleUrl => styleUrls para que funcione correctamente.
-Para que pase el test del app.spec.ts a algo como..
-    expect(compiled.querySelector('p')?.textContent).toContain('header works!');
-Así pasará el test y se confirmará que el header se renderiza correctamente dentro del app.html
-Se revisó que el proyecto hasta hora funciona con npm run start y se puede acceder a localhost:4200 sin errores.
-Estoy asumiendo que todos los componentes serían standalone, no tomaré en cuenta si no lo son porque el proyecto se creó con Angular 21.2 y el CLI ya genera componentes standalone por defecto.
-toca hacer un npm audit fix, para corregir las vulnerabilidades de los paquetes instalados, hay cosas que pueden ser corregidas sin romper nada, pero otras requieren un --force y pueden romper cosas, así que lo dejo a tu criterio. Ya aquí no es problema del boilerplate, sino de las dependencias que se instalaron.
-para crear las URLs tienes que irte al archivo routes.ts y agregar las rutas, luego me gusta crear los componentes con el CLI, pero también puedes crearlos manualmente, lo importante es que sigas la estructura modular que se propuso.
+> Observaciones relevantes recogidas durante la configuración del boilerplate.
 
+- **Componentes standalone por defecto** — El proyecto fue creado con Angular CLI 21.x, que genera todos los componentes como standalone. No se usa `NgModule` en ningún lugar.
+- **`styleUrl` vs `styleUrls`** — El CLI genera `styleUrl` (singular, Angular 17+). Si algún componente necesita múltiples hojas de estilos, usa el array `styleUrls`.
+- **Test de humo en `app.spec.ts`** — El test comprueba que `querySelector('p')?.textContent` contenga `'header works!'`, lo que confirma que el `Header` se renderiza correctamente dentro de `app.html`. Si cambias el contenido del header, actualiza también este test.
+- **`npm audit`** — Algunos paquetes instalados presentan vulnerabilidades conocidas. Ejecuta `npm audit fix` para las correcciones seguras; las que requieren `--force` pueden introducir breaking changes y deben evaluarse manualmente.
+- **Proyecto verificado funcionando** — `npm run start` levanta la aplicación en `localhost:4200` sin errores de compilación ni de consola.
+
+---
+
+## ✅ TODO
+
+> Tareas pendientes identificadas analizando el estado actual de `angular-project/`. Ordenadas por prioridad.
+
+### 🔴 Crítico — El proyecto no funciona correctamente sin esto
+
+- [ ] **Registrar `provideHttpClient()` en `app.config.ts`** — actualmente no está declarado, por lo que cualquier inyección de `HttpClient` lanzará `NullInjectorError` en runtime.
+- [ ] **Registrar el interceptor en `app.config.ts`** — `httpInterceptorInterceptor` existe pero nunca se pasa a `withInterceptors([...])`, por lo que no tiene ningún efecto.
+- [ ] **Mover `@sentry/cli` a `devDependencies`** — es una herramienta de CI/CD y no debe incluirse en el bundle de producción.
+
+### 🟠 Servicios — Implementar la lógica de negocio
+
+- [ ] **`Api` service** — inyectar `HttpClient` y añadir métodos genéricos (`get`, `post`, `put`, `delete`) con tipado. Leer `environment.apiUrl` como `baseUrl`.
+- [ ] **`Auth` service** — implementar gestión de sesión: `login()`, `logout()`, `isAuthenticated()`, almacenamiento seguro del token (no en `localStorage` en producción).
+- [ ] **`httpInterceptorInterceptor`** — añadir cabecera `Authorization: Bearer <token>` en cada petición saliente y manejo global de errores HTTP (401 → redirigir a login, 5xx → notificar).
+- [ ] **`authGuardGuard`** — hacer que compruebe `Auth.isAuthenticated()` y redirija a `/login` si no está autenticado. Aplicarlo a las rutas protegidas en `app.routes.ts`.
+
+### 🟡 Configuración — Corregir valores por defecto vacíos
+
+- [ ] **`environment.ts` y `environment.development.ts`** — añadir al menos `production: boolean` y `apiUrl: string`. Sin esto, el `ApiService` no tiene base URL.
+- [ ] **DSN de Sentry** — reemplazar el DSN placeholder falso por el real del proyecto. Revisar también que `sendDefaultPii: true` sea intencional, ya que envía datos de usuario a Sentry.
+- [ ] **Rutas SSR (`app.routes.server.ts`)** — cambiar `RenderMode.Prerender` del wildcard `'**'` a `RenderMode.Server` para evitar pre-renderizado estático del 404.
+- [ ] **Eliminar `sentry-example.component.ts`** — el propio comentario del archivo indica que debe borrarse una vez verificado Sentry.
+
+### 🟢 Componentes — Contenido real en lugar de scaffolding
+
+- [ ] **`Header`** — añadir barra de navegación con links a las rutas existentes (`/`, `/about`).
+- [ ] **`Footer`** — añadir contenido básico (copyright, links).
+- [ ] **`Home`** — implementar contenido real de la página de inicio.
+- [ ] **`About`** — implementar contenido real de la página "Acerca de".
+- [ ] **`NotFound`** — diseñar página de error 404 y establecer el HTTP status code 404 en SSR mediante `inject(RESPONSE_INIT)`.
+- [ ] **`ExamplePipe`** — tipificar correctamente `value` y `args`, implementar la transformación y eliminar el `return null`.
+- [ ] **`Example` directive** — implementar lógica real o reemplazar por una directiva útil para el proyecto.
+- [ ] **`Example` model** — definir la interfaz con campos reales o eliminarla si no se necesita.
+
+### 🔵 Arquitectura — Buenas prácticas y escalabilidad
+
+- [ ] **Barrel exports (`index.ts`)** — crear archivos `index.ts` en `core/`, `shared/`, y `features/` para simplificar los imports.
+- [ ] **Gestión de estado** — evaluar e incorporar un patrón de estado: Signal Store (`@ngrx/signals`), servicios con `signal()`, o `BehaviorSubject`. Actualmente no hay ningún mecanismo.
+- [ ] **Manejo de errores y loading** — establecer un patrón consistente para estados de carga y error en los componentes (e.g., `computed()` signals o un `AsyncState<T>` helper).
+- [ ] **i18n** — `enableI18nLegacyMessageIdFormat: false` está configurado pero no hay ninguna implementación de internacionalización. Añadir soporte o eliminar la configuración si no se necesita.
+
+### ⚪ Tests — Cobertura real
+
+- [ ] **`ApiService`** — tests con `HttpTestingController` para cada método HTTP.
+- [ ] **`AuthService`** — tests de `login()`, `logout()` e `isAuthenticated()`.
+- [ ] **`authGuardGuard`** — test de redirección cuando el usuario no está autenticado.
+- [ ] **`httpInterceptorInterceptor`** — test que verifica que se añade la cabecera `Authorization`.
+- [ ] **`ExamplePipe`** — tests de la transformación con distintos inputs.
+- [ ] **Tests de routing** — verificar que las rutas cargan los componentes correctos.
+- [ ] **Actualizar `app.spec.ts`** — cuando el `Header` tenga contenido real, actualizar el selector del test para que no dependa del texto placeholder.
+
+### ⚪ CI/CD y Tooling
+
+- [ ] **GitHub Actions** — crear workflow `.github/workflows/ci.yml` con jobs de lint, test y build.
+- [ ] **Husky hooks** — verificar que el directorio `.husky/` existe y que el hook `pre-commit` ejecuta `lint-staged`. (Husky está instalado pero los hooks pueden no haberse inicializado.)
+- [ ] **`npm audit fix`** — resolver las vulnerabilidades identificadas que no requieran `--force`.
+
+---
 
 > **Hane Boilerplates** — Angular Setup Guide
