@@ -448,6 +448,150 @@ export const environment = {
 
 ```bash
 npx @sentry/wizard@latest -i angular
+
+npx @sentry/wizard@latest -i angular           ✔  system   03:52:14  
+
+┌   Sentry Angular Wizard 
+│
+◇   ────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                   │
+│  The Sentry Angular Wizard will help you set up Sentry for your application.                      │
+│  Thank you for using Sentry :)                                                                    │
+│                                                                                                   │
+│  Version: 6.12.0                                                                                  │
+│                                                                                                   │
+│  This wizard sends telemetry data and crash reports to Sentry. This helps us improve the Wizard.  │
+│  You can turn this off at any time by running sentry-wizard --disable-telemetry.                  │
+│                                                                                                   │
+├───────────────────────────────────────────────────────────────────────────────────────────────────╯
+│
+▲  You have uncommitted or untracked files in your repo:
+│  
+│  - Angular.md
+│  - angular-project/src/app/app.html
+│  - angular-project/src/app/app.scss
+│  - angular-project/src/app/core/
+│  - angular-project/src/app/shared/directives/
+│  - angular-project/src/app/shared/pipes/
+│  
+│  The wizard will create and update files.
+│
+◇  Do you want to continue anyway?
+│  Yes
+│
+◇  Are you using Sentry SaaS or self-hosted Sentry?
+│  Sentry SaaS (sentry.io)
+│
+◇  Do you already have a Sentry account?
+│  Yes
+│
+●  If the browser window didn't open automatically, please open the following link to log into Sentry:
+│  
+│  https://sentry.io/account/settings/wizard/d2kohxzqi752ygsb1ibwe7ixnq50jnbv0m91az7immguie1ex2rafogvagwwowg1/?project_platform=javascript-angular
+│
+◇  Login complete.
+│
+◇  Selected project hane/node
+│
+(node:56338) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+◇  Installed @sentry/angular with NPM.
+│
+◇  Do you want to enable Tracing to track the performance of your application?
+│  Yes
+│
+◇  Do you want to enable Session Replay to get a video-like reproduction of errors during a user session?
+│  No
+│
+◇  Do you want to enable Logs to send your application logs to Sentry?
+│  Yes
+│
+◆  Successfully initialized Sentry in main.ts
+│
+◆  Successfully updated your app config app.config.ts
+│
+◇  Installed @sentry/cli@^2 with NPM.
+│
+◇  Where are your build artifacts located?
+│  ./dist
+│
+◇  We couldn't find build artifacts at "./dist". What would you like to do?
+│  Proceed anyway — I believe the path is correct
+│
+●  Added a sentry:sourcemaps script to your package.json.
+│
+◇  Do you want to automatically run the sentry:sourcemaps script after each production build?
+│  Yes
+│
+◇  Is npm run build your production build command?
+│  Yes
+│
+●  Added sentry:sourcemaps script to your build command.
+│
+◆  Added auth token to .sentryclirc for you to test uploading source maps locally.
+│
+◆  Created .sentryclirc.
+│
+◆  Added .sentryclirc to .gitignore.
+│
+◇  Are you using a CI/CD tool to build and deploy your application?
+│  Yes
+│
+◇  Add the Sentry authentication token as an environment variable to your CI setup:
+
+SENTRY_AUTH_TOKEN=
+6ImhhbmUifQ=
+
+│
+▲  DO NOT commit this auth token to your repository!
+│
+◇  Did you configure CI as shown above?
+│  Yes, continue!
+│
+◇  Do you want to create an example component to test your Sentry setup?
+│  Yes
+│
+◆  Created example component at ./src/app/sentry-example.component.ts
+│
+◇  Add the example component one of your pages or components (for example, in app.component.ts).
+
+import { SentryExample } from './sentry-example.component'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, SentryExample],
+  template: `
+    <div class="app">
+      <h1>Your Application</h1>
+      <app-sentry-example></app-sentry-example>
+    </div>
+  `,
+})
+
+
+│
+◇  Did you apply the snippet above?
+│  Yes, continue!
+│
+◇  Looks like you have Prettier in your project. Do you want to run it on your files?
+│  Yes
+│
+◇  Prettier failed to run.
+│
+▲  Prettier failed to run. There may be formatting issues in your updated files.
+│
+◇  Optionally add a project-scoped MCP server configuration for the Sentry MCP?
+│  No
+│
+└  Successfully installed the Sentry Angular SDK!
+
+You can validate your setup by starting your dev environment (ng serve) and throwing an error in the example component.
+
+Check out the SDK documentation for further configuration:
+https://docs.sentry.io/platforms/javascript/guides/angular/
+
+
 ```
 
 ### ESLint
