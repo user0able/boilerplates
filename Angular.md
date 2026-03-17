@@ -739,9 +739,9 @@ Añade estos scripts a tu `package.json`:
 
 ### 🔴 Crítico — El proyecto no funciona correctamente sin esto
 
-- [ ] **Registrar `provideHttpClient()` en `app.config.ts`** — actualmente no está declarado, por lo que cualquier inyección de `HttpClient` lanzará `NullInjectorError` en runtime.
-- [ ] **Registrar el interceptor en `app.config.ts`** — `httpInterceptorInterceptor` existe pero nunca se pasa a `withInterceptors([...])`, por lo que no tiene ningún efecto.
-- [ ] **Mover `@sentry/cli` a `devDependencies`** — es una herramienta de CI/CD y no debe incluirse en el bundle de producción.
+- [x] **Registrar `provideHttpClient()` en `app.config.ts`** — añadido `provideHttpClient(withInterceptors([httpInterceptorInterceptor]))`.
+- [x] **Registrar el interceptor en `app.config.ts`** — `httpInterceptorInterceptor` ahora se pasa a `withInterceptors([...])` correctamente.
+- [x] **Mover `@sentry/cli` a `devDependencies`** — movido; es una herramienta de CI/CD y no debe incluirse en el bundle de producción.
 
 ### 🟠 Servicios — Implementar la lógica de negocio
 
@@ -752,9 +752,9 @@ Añade estos scripts a tu `package.json`:
 
 ### 🟡 Configuración — Corregir valores por defecto vacíos
 
-- [ ] **`environment.ts` y `environment.development.ts`** — añadir al menos `production: boolean` y `apiUrl: string`. Sin esto, el `ApiService` no tiene base URL.
+- [x] **`environment.ts` y `environment.development.ts`** — añadidos `production: boolean` y `apiUrl: string` en ambos archivos.
 - [ ] **DSN de Sentry** — reemplazar el DSN placeholder falso por el real del proyecto. Revisar también que `sendDefaultPii: true` sea intencional, ya que envía datos de usuario a Sentry.
-- [ ] **Rutas SSR (`app.routes.server.ts`)** — cambiar `RenderMode.Prerender` del wildcard `'**'` a `RenderMode.Server` para evitar pre-renderizado estático del 404.
+- [x] **Rutas SSR (`app.routes.server.ts`)** — cambiado `RenderMode.Prerender` a `RenderMode.Server` en el wildcard `'**'`.
 - [ ] **Eliminar `sentry-example.component.ts`** — el propio comentario del archivo indica que debe borrarse una vez verificado Sentry.
 
 ### 🟢 Componentes — Contenido real en lugar de scaffolding
