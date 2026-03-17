@@ -36,14 +36,12 @@ ng g c features/not-found
 ng g c shared/ui/footer
 ng g c shared/ui/header
 ng g class core/models --type=model
-ng g service core/services
+ng g service core/services // para APIs y otro para lógica de negocio
 ng g interceptor core/services/interceptor
 ng g guard core/services/guard
 ng g pipe shared/pipes
 ng g directive shared/directives
 ng g environment environments/environment
-ng g 
-
 
 - modifica el src/app.html para incluir el header y footer:
 <app-header/>
@@ -52,4 +50,3 @@ ng g
 
 - install Sentry:
 npx @sentry/wizard@latest -i angular
-
