@@ -215,11 +215,38 @@ ng g c shared/ui/footer
 ### Core (Servicios, Guards, Interceptors)
 
 ```bash
-ng g class core/models/example --type=model
+ng g interface core/models/example --type=model
 ng g service core/services/api
 ng g service core/services/auth
 ng g interceptor core/services/http-interceptor
 ng g guard core/services/auth-guard
+
+# Resultado esperado:
+
+ng g interface core/models/example --type=model
+
+CREATE src/app/core/models/example.model.ts (29 bytes)
+
+ng g service core/services/api
+
+CREATE src/app/core/services/api.spec.ts (306 bytes)
+CREATE src/app/core/services/api.ts (108 bytes)
+
+ng g service core/services/auth
+
+CREATE src/app/core/services/auth.spec.ts (311 bytes)
+CREATE src/app/core/services/auth.ts (109 bytes)
+
+ng g interceptor core/services/http-interceptor
+
+CREATE src/app/core/services/http-interceptor-interceptor.spec.ts (521 bytes)
+CREATE src/app/core/services/http-interceptor-interceptor.ts (160 bytes)
+
+ng g guard core/services/auth-guard
+
+✔ Which type of guard would you like to create? CanActivate
+CREATE src/app/core/services/auth-guard-guard.spec.ts (482 bytes)
+CREATE src/app/core/services/auth-guard-guard.ts (133 bytes)
 ```
 
 ### Shared (Pipes y Directivas)
@@ -257,7 +284,7 @@ ng g directive shared/directives/example
 
 ## 🎨 Configuración del Layout
 
-Edita `src/app/app.component.html` para definir el layout principal:
+Edita `src/app/app.html` para definir el layout principal:
 
 ```html
 <app-header />
@@ -267,7 +294,7 @@ Edita `src/app/app.component.html` para definir el layout principal:
 <app-footer />
 ```
 
-Y en `src/app/app.component.scss`:
+Y en `src/app/app.scss`:
 
 ```scss
 :host {
@@ -295,17 +322,17 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./features/home/home.component').then(m => m.HomeComponent),
+      import('./features/home/home').then(m => m.Home),
   },
   {
     path: 'about',
     loadComponent: () =>
-      import('./features/about/about.component').then(m => m.AboutComponent),
+      import('./features/about/about').then(m => m.About),
   },
   {
     path: '**',
     loadComponent: () =>
-      import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
+      import('./features/not-found/not-found').then(m => m.NotFound),
   },
 ];
 ```
@@ -316,7 +343,7 @@ export const routes: Routes = [
 
 ## 🔌 Servicios y API
 
-### API Service (`core/services/api.service.ts`)
+### API Service (`core/services/api.ts`)
 
 ```typescript
 import { Injectable, inject } from '@angular/core';
@@ -393,7 +420,7 @@ export const appConfig: ApplicationConfig = {
 
 ## 🌍 Environments
 
-### `src/environments/environment.ts` (Desarrollo)
+### `src/environments/environment.development.ts` (Desarrollo)
 
 ```typescript
 export const environment = {
@@ -402,7 +429,9 @@ export const environment = {
 };
 ```
 
-### `src/environments/environment.prod.ts` (Producción)
+---
+
+### `src/environments/environment.ts` (Producción)
 
 ```typescript
 export const environment = {
