@@ -562,19 +562,33 @@ urlpatterns += [
 
 La configuración de CORS ya está incluida con `django-cors-headers`. Asegúrate de que:
 
-1. `"corsheaders"` está en `INSTALLED_APPS`
+1. `"corsheaders"` está en `INSTALLED_APPS` (dentro de `THIRD_PARTY_APPS` en `base.py`)
 2. `"corsheaders.middleware.CorsMiddleware"` está en `MIDDLEWARE` (antes de `CommonMiddleware`)
-3. Configura los orígenes permitidos:
+3. Configura los orígenes permitidos según el entorno:
 
 ```python
-# Desarrollo (permisivo)
+# config/settings/development.py — permisivo
 CORS_ALLOW_ALL_ORIGINS = True
+```
 
-# Producción (restrictivo)
-CORS_ALLOWED_ORIGINS = [
-    "https://tu-dominio.com",
-    "https://www.tu-dominio.com",
-]
+```python
+# config/settings/production.py — restrictivo, lee de .env
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
+```
+
+En el `.env` de producción:
+
+```env
+CORS_ALLOWED_ORIGINS=https://tu-dominio.com,https://www.tu-dominio.com
+```
+
+### Verificación
+
+Con el servidor corriendo (`python manage.py runserver`), una petición con cabecera `Origin` debe devolver `access-control-allow-origin`:
+
+```bash
+curl -I -H "Origin: http://example.com" http://127.0.0.1:8000/api/v1/users/
+# Debe incluir: access-control-allow-origin: *
 ```
 
 ---
