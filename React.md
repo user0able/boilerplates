@@ -23,10 +23,10 @@
 
 ## 🔧 Requisitos Previos
 
-| Herramienta | Versión Mínima | Instalación |
-|-------------|---------------|-------------|
-| Node.js     | 18.x          | [nodejs.org](https://nodejs.org) |
-| npm         | 9.x           | Incluido con Node.js |
+| Herramienta | Versión Mínima | Instalación                      |
+| ----------- | -------------- | -------------------------------- |
+| Node.js     | 18.x           | [nodejs.org](https://nodejs.org) |
+| npm         | 9.x            | Incluido con Node.js             |
 
 Verificar instalación:
 

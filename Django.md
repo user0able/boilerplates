@@ -24,11 +24,11 @@
 
 ## 🔧 Requisitos Previos
 
-| Herramienta | Versión Mínima | Instalación |
-|-------------|---------------|-------------|
-| Python      | 3.11+         | [python.org](https://python.org) |
-| pip         | 23.x          | Incluido con Python |
-| PostgreSQL  | 15.x          | [postgresql.org](https://postgresql.org) (opcional, SQLite por defecto) |
+| Herramienta | Versión Mínima | Instalación                                                             |
+| ----------- | -------------- | ----------------------------------------------------------------------- |
+| Python      | 3.11+          | [python.org](https://python.org)                                        |
+| pip         | 23.x           | Incluido con Python                                                     |
+| PostgreSQL  | 15.x           | [postgresql.org](https://postgresql.org) (opcional, SQLite por defecto) |
 
 Verificar instalación:
 

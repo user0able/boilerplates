@@ -25,10 +25,10 @@
 
 ## 🔧 Requisitos Previos
 
-| Herramienta    | Versión Mínima | Instalación |
-|----------------|---------------|-------------|
-| Docker Engine  | 24.x          | [docker.com](https://docs.docker.com/get-docker/) |
-| Docker Compose | 2.20+         | Incluido con Docker Desktop |
+| Herramienta    | Versión Mínima | Instalación                                       |
+| -------------- | -------------- | ------------------------------------------------- |
+| Docker Engine  | 24.x           | [docker.com](https://docs.docker.com/get-docker/) |
+| Docker Compose | 2.20+          | Incluido con Docker Desktop                       |
 
 Verificar instalación:
 
@@ -41,15 +41,15 @@ docker compose version
 
 ## 📚 Conceptos Clave
 
-| Concepto | Descripción |
-|----------|-------------|
-| **Image** | Template inmutable con el código y dependencias |
-| **Container** | Instancia en ejecución de una imagen |
-| **Dockerfile** | Receta para construir una imagen |
-| **Compose** | Orquestación de múltiples containers |
-| **Volume** | Persistencia de datos fuera del container |
-| **Multi-stage build** | Builds en fases para reducir tamaño de imagen |
-| **Layer caching** | Reutilización de capas para builds más rápidos |
+| Concepto              | Descripción                                     |
+| --------------------- | ----------------------------------------------- |
+| **Image**             | Template inmutable con el código y dependencias |
+| **Container**         | Instancia en ejecución de una imagen            |
+| **Dockerfile**        | Receta para construir una imagen                |
+| **Compose**           | Orquestación de múltiples containers            |
+| **Volume**            | Persistencia de datos fuera del container       |
+| **Multi-stage build** | Builds en fases para reducir tamaño de imagen   |
+| **Layer caching**     | Reutilización de capas para builds más rápidos  |
 
 ---
 
@@ -618,11 +618,11 @@ docker builder prune
 
 ## 💾 Volúmenes y Persistencia
 
-| Tipo | Uso | Sintaxis |
-|------|-----|----------|
-| **Named volume** | Datos persistentes (BD) | `postgres_data:/var/lib/postgresql/data` |
-| **Bind mount** | Código fuente (dev) | `./backend:/app` |
-| **Anonymous volume** | Excluir directorios | `/app/node_modules` |
+| Tipo                 | Uso                     | Sintaxis                                 |
+| -------------------- | ----------------------- | ---------------------------------------- |
+| **Named volume**     | Datos persistentes (BD) | `postgres_data:/var/lib/postgresql/data` |
+| **Bind mount**       | Código fuente (dev)     | `./backend:/app`                         |
+| **Anonymous volume** | Excluir directorios     | `/app/node_modules`                      |
 
 ```bash
 # Listar volúmenes
@@ -670,23 +670,23 @@ docker network inspect <project>_default
 
 ### Comparativa de tamaños
 
-| Base image | Tamaño aprox. |
-|-----------|---------------|
-| `node:22` | ~1.1 GB |
-| `node:22-slim` | ~200 MB |
-| `node:22-alpine` | ~130 MB |
-| `python:3.12` | ~1.0 GB |
-| `python:3.12-slim` | ~150 MB |
-| `nginx:alpine` | ~40 MB |
+| Base image         | Tamaño aprox. |
+| ------------------ | ------------- |
+| `node:22`          | ~1.1 GB       |
+| `node:22-slim`     | ~200 MB       |
+| `node:22-alpine`   | ~130 MB       |
+| `python:3.12`      | ~1.0 GB       |
+| `python:3.12-slim` | ~150 MB       |
+| `nginx:alpine`     | ~40 MB        |
 
 ### Resultado final (con multi-stage)
 
-| App | Tamaño imagen |
-|-----|--------------|
-| Angular (nginx) | ~50 MB |
-| React (nginx) | ~45 MB |
-| Django (slim) | ~200 MB |
-| Node.js (alpine) | ~180 MB |
+| App              | Tamaño imagen |
+| ---------------- | ------------- |
+| Angular (nginx)  | ~50 MB        |
+| React (nginx)    | ~45 MB        |
+| Django (slim)    | ~200 MB       |
+| Node.js (alpine) | ~180 MB       |
 
 ---
 
@@ -711,16 +711,16 @@ DJANGO_SETTINGS_MODULE=config.settings.production
 
 ## 🔍 Troubleshooting
 
-| Problema | Solución |
-|----------|----------|
-| Hot reload no funciona (Angular/React) | Agregar `--poll 2000` al serve command |
-| `node_modules` vacío en container | Usar anonymous volume: `/app/node_modules` |
-| Permisos de archivos en Linux | Usar `user: "${UID}:${GID}"` en compose |
-| Container se cierra inmediatamente | Revisar logs: `docker compose logs <service>` |
-| Puerto ya en uso | Cambiar el puerto en compose o liberar: `lsof -i :<port>` |
-| Build lento | Verificar `.dockerignore`, usar layer caching |
-| DB no conecta | Esperar healthcheck: `depends_on: condition: service_healthy` |
-| "Cannot find module" | El volume mount puede pisar `node_modules`. Usar anonymous volume |
+| Problema                               | Solución                                                          |
+| -------------------------------------- | ----------------------------------------------------------------- |
+| Hot reload no funciona (Angular/React) | Agregar `--poll 2000` al serve command                            |
+| `node_modules` vacío en container      | Usar anonymous volume: `/app/node_modules`                        |
+| Permisos de archivos en Linux          | Usar `user: "${UID}:${GID}"` en compose                           |
+| Container se cierra inmediatamente     | Revisar logs: `docker compose logs <service>`                     |
+| Puerto ya en uso                       | Cambiar el puerto en compose o liberar: `lsof -i :<port>`         |
+| Build lento                            | Verificar `.dockerignore`, usar layer caching                     |
+| DB no conecta                          | Esperar healthcheck: `depends_on: condition: service_healthy`     |
+| "Cannot find module"                   | El volume mount puede pisar `node_modules`. Usar anonymous volume |
 
 ---
 

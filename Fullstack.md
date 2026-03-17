@@ -467,11 +467,11 @@ export const useAuthStore = create<AuthState>()(
 
 Los endpoints de autenticación ya están documentados en [Django.md](Django.md) (SimpleJWT) y [Node.md](Node.md) (jsonwebtoken). Resumen de endpoints:
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST | `/api/v1/auth/register` | Registro de usuario |
-| POST | `/api/v1/auth/login` | Login (devuelve JWT) |
-| POST | `/api/v1/auth/token/refresh` | Refrescar token (Django) |
+| Método | Endpoint                     | Descripción              |
+| ------ | ---------------------------- | ------------------------ |
+| POST   | `/api/v1/auth/register`      | Registro de usuario      |
+| POST   | `/api/v1/auth/login`         | Login (devuelve JWT)     |
+| POST   | `/api/v1/auth/token/refresh` | Refrescar token (Django) |
 
 ---
 
@@ -481,9 +481,9 @@ Los endpoints de autenticación ya están documentados en [Django.md](Django.md)
 
 En desarrollo, el frontend y backend corren en puertos diferentes (4200/5173 y 8000/3000). El proxy evita problemas de CORS redirigiendo las llamadas API a través del dev server del frontend.
 
-| Stack | Archivo de configuración | Target |
-|-------|------------------------|--------|
-| Angular | `proxy.conf.json` | `http://localhost:8000` |
+| Stack        | Archivo de configuración        | Target                  |
+| ------------ | ------------------------------- | ----------------------- |
+| Angular      | `proxy.conf.json`               | `http://localhost:8000` |
 | React (Vite) | `vite.config.ts → server.proxy` | `http://localhost:3000` |
 
 > **Con Docker Compose:** los servicios se comunican por nombre. El frontend container accede al backend como `http://backend:8000` o `http://backend:3000`.
