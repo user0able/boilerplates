@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import include, path
 from drf_spectacular.views import (
     SpectacularAPIView,
@@ -12,6 +13,8 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Health check
+    path("api/health/", lambda request: JsonResponse({"status": "ok"}), name="health"),
     # API
     path("api/v1/", include("apps.users.urls")),
     # API Documentation

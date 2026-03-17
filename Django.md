@@ -20,6 +20,7 @@
 - [Herramientas Adicionales](#-herramientas-adicionales)
 - [Scripts Útiles](#-scripts-útiles)
 - [Errores Comunes](#-errores-comunes)
+- [TODO](#-todo)
 
 ---
 
@@ -798,20 +799,35 @@ make setup         # Setup inicial completo
 
 ## ✅ Checklist de Setup
 
-- [ ] Entorno virtual creado y activado
-- [ ] Dependencias instaladas (`requirements.txt`)
-- [ ] Settings separados por entorno
-- [ ] Variables de entorno configuradas (`.env`)
-- [ ] Modelo de usuario personalizado (`AUTH_USER_MODEL`)
-- [ ] Django REST Framework configurado
-- [ ] CORS configurado
-- [ ] URLs y ViewSets creados
-- [ ] Documentación API (Swagger/Redoc) funcionando
-- [ ] Migraciones aplicadas
+- [x] Entorno virtual creado y activado (`boilerEnv`)
+- [x] Dependencias instaladas (`requirements.txt`)
+- [x] Settings separados por entorno (`base.py`, `development.py`, `production.py`)
+- [x] `manage.py` → `config.settings.development`
+- [x] `wsgi.py` / `asgi.py` → `config.settings.production`
+- [x] Variables de entorno configuradas (`.env` + `.env.example`)
+- [x] Modelo de usuario personalizado (`AUTH_USER_MODEL = "users.User"`)
+- [x] Django REST Framework configurado
+- [x] JWT con SimpleJWT configurado (token + refresh endpoints)
+- [x] CORS configurado (dev: permisivo, prod: restrictivo desde `.env`)
+- [x] URLs y ViewSets creados (`UserViewSet`)
+- [x] Documentación API (Swagger `/api/docs/` + Redoc `/api/redoc/`)
+- [x] Migraciones aplicadas
+- [x] `TimeStampedModel` base abstracto creado
+- [x] `StandardPagination` configurada
+- [x] Ruff configurado (`ruff.toml`)
+- [x] Pre-commit configurado (`.pre-commit-config.yaml`)
+- [x] pytest configurado (`pytest.ini`)
+- [x] Makefile con scripts útiles
+- [x] `.gitignore` configurado
+- [x] Sentry configurado en producción
+- [x] `UserAdmin` registrado en admin
+- [x] Health check endpoint (`/api/health/`)
+- [x] Whitenoise configurado para estáticos
+- [x] Throttling / Rate Limiting configurado
+- [x] Logging estructurado configurado
+- [x] Permisos y excepciones personalizadas (`core/`)
+- [x] Tests unitarios (9 tests pasando)
 - [ ] Superusuario creado
-- [ ] Ruff + pre-commit configurados
-- [ ] Tests básicos pasando
-- [ ] `.gitignore` configurado
 
 ---
 
@@ -865,6 +881,51 @@ DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 DJANGO_SETTINGS_MODULE=config.settings.development
 ```
+
+---
+
+## 📌 TODO
+
+> Tareas pendientes identificadas analizando el estado actual de `djangoproject/` y comparando con boilerplates de referencia como [cookiecutter-django](https://github.com/cookiecutter/cookiecutter-django), [Lithium (DjangoX)](https://github.com/wsvincent/lithium) y [cookiecutter-django-rest](https://github.com/agconti/cookiecutter-django-rest).
+
+### 🔴 Crítico — Funcionalidad incompleta
+
+- [ ] **Crear superusuario** — ejecutar `python manage.py createsuperuser` para poder acceder a `/admin/`.
+- [x] **Tests reales** — ~~todos los `tests.py` están vacíos~~. Implementados tests de modelo, serializer y endpoint para `User` (9 tests).
+
+### 🟠 Seguridad y Producción
+
+- [x] **Whitenoise para archivos estáticos** — instalado y `WhiteNoiseMiddleware` añadido después de `SecurityMiddleware`.
+- [x] **Throttling / Rate Limiting** — configurado `DEFAULT_THROTTLE_CLASSES` con `AnonRateThrottle` (100/h) y `UserRateThrottle` (1000/h).
+- [x] **HTTPS en producción** — configurados `SECURE_HSTS_SECONDS`, `SECURE_HSTS_INCLUDE_SUBDOMAINS` y `SECURE_HSTS_PRELOAD` en `production.py`.
+- [x] **Logging estructurado** — configurado `LOGGING` en `base.py` con handler de consola y formato verbose.
+
+### 🟡 Funcionalidades Faltantes
+
+- [ ] **Endpoint de registro de usuario** — actualmente solo hay login/refresh JWT pero no hay endpoint de signup.
+- [ ] **Endpoint de perfil** — `GET /api/v1/users/me/` para obtener el usuario autenticado sin necesidad de conocer su ID.
+- [x] **Permisos personalizados** — creado `apps/core/permissions.py` con `IsOwner`.
+- [x] **Excepciones personalizadas** — creado `apps/core/exceptions.py` con handler registrado en `REST_FRAMEWORK`.
+- [ ] **Señales (signals)** — evaluar si se necesitan signals para `post_save` del User (e.g., crear perfil automáticamente, enviar email de bienvenida).
+
+### 🟢 Estructura y Calidad de Código
+
+- [x] **Crear directorios `static/` y `media/`** con archivos `.gitkeep`.
+- [x] **Crear directorio `templates/`** con `.gitkeep`.
+- [x] **Separar tests en módulos** — reemplazado `tests.py` por `tests/` con `test_models.py`, `test_views.py`, `test_serializers.py`.
+- [ ] **Barrel imports** — crear archivos `__init__.py` en `core/` y `users/` que re-exporten las clases principales para simplificar imports.
+
+### 🔵 DevOps e Infraestructura
+
+- [ ] **Docker** — crear `Dockerfile` y `docker-compose.yml` con servicios de Django + PostgreSQL para desarrollo local containerizado.
+- [ ] **CI/CD** — crear `.github/workflows/ci.yml` con jobs de lint (`ruff`), test (`pytest`), y check de migraciones (`makemigrations --check`).
+- [x] **Health check endpoint** — creado `GET /api/health/` sin autenticación que retorna `{"status": "ok"}`.
+- [ ] **Tareas asíncronas (Celery)** — evaluar si el proyecto necesita procesamiento en background. Si es así, configurar Celery + Redis.
+
+### ⚪ Documentación
+
+- [ ] **README.md del proyecto** — crear un `README.md` dentro de `djangoproject/` con instrucciones de setup, variables de entorno requeridas, y comandos disponibles en el Makefile.
+- [ ] **Documentar la API** — mejorar `SPECTACULAR_SETTINGS` con descripciones detalladas, tags por app, y ejemplos de request/response.
 
 ---
 
