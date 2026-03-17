@@ -46,7 +46,21 @@ npm install -g @angular/cli
 
 # Crear nuevo proyecto
 ng new <nombre-del-proyecto>
+
+ng new angular-project
+
+✔ Which stylesheet system would you like to use? Sass (SCSS)     [ https://sass-lang.com/documentation/syntax#scss                ]
+✔ Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)? Yes
+✔ Which AI tools do you want to configure with Angular best practices? https://angular.dev/ai/develop-with-ai None
+CREATE files created list...
+⠴ Installing packages (npm)...
+
 cd <nombre-del-proyecto>
+
+ls
+
+angular.json       package-lock.json  public             src                tsconfig.json
+node_modules       package.json       README.md          tsconfig.app.json  tsconfig.spec.json
 ```
 
 > **Opciones recomendadas durante la creación:**
