@@ -19,6 +19,7 @@
 - [Base de Datos](#-base-de-datos)
 - [Herramientas Adicionales](#-herramientas-adicionales)
 - [Scripts Útiles](#-scripts-útiles)
+- [Errores Comunes](#-errores-comunes)
 
 ---
 
@@ -352,6 +353,22 @@ import os
 environment = os.environ.get("DJANGO_SETTINGS_MODULE", "config.settings.development")
 ```
 
+> **Importante:** El `__init__.py` es solo referencial. Lo que realmente importa es que `manage.py`, `wsgi.py` y `asgi.py` apunten al módulo correcto.
+
+### `manage.py` — apuntar al módulo de settings correcto
+
+```python
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.development')
+```
+
+### `config/wsgi.py` y `config/asgi.py`
+
+```python
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.production')
+```
+
+> Si `manage.py` apunta a `'config.settings'` (el paquete, sin especificar módulo), Django cargará el `__init__.py` del paquete, que en la mayoría de los casos está vacío o no define `DATABASES`. Esto causa el error `settings.DATABASES is improperly configured. Please supply the ENGINE value`.
+
 ---
 
 ## 🧩 Apps y Modelos
@@ -502,8 +519,8 @@ urlpatterns = [
 ### JWT con SimpleJWT (opcional)
 
 ```bash
-aquí voy, pero se cae
 pip install djangorestframework-simplejwt
+pip freeze > requirements.txt
 ```
 
 En `config/settings/base.py`:
@@ -781,6 +798,59 @@ make setup         # Setup inicial completo
 - [ ] Ruff + pre-commit configurados
 - [ ] Tests básicos pasando
 - [ ] `.gitignore` configurado
+
+---
+
+---
+
+## ⚠️ Errores Comunes
+
+### `ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value`
+
+**Causa:** `manage.py` (o `wsgi.py` / `asgi.py`) apunta a `'config.settings'` (el paquete) en lugar de a un módulo concreto como `'config.settings.development'`. Django ejecuta el `__init__.py` del paquete, que no define `DATABASES`.
+
+**Solución:** en `manage.py`:
+
+```python
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.development')
+```
+
+---
+
+### `ImproperlyConfigured: Set the SECRET_KEY environment variable`
+
+**Causa:** El fichero `.env` no existe o `BASE_DIR` en `base.py` está mal definido y `django-environ` no encuentra el fichero.
+
+**Verificar `BASE_DIR`:** con la estructura `config/settings/base.py`, el proyecto raíz está 3 niveles arriba:
+
+```python
+# config/settings/base.py
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+#                                   ↑ settings/  ↑ config/  ↑ raíz del proyecto
+```
+
+Un `parent.parent` (solo 2) apunta a `config/` — si el `.env` está en la raíz, no lo encontrará.
+
+**Crear el `.env`** copiando el ejemplo y rellenando los valores:
+
+```bash
+cp .env.example .env
+```
+
+Generar un `SECRET_KEY` seguro:
+
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+`.env` mínimo para desarrollo:
+
+```env
+SECRET_KEY=<el valor generado arriba>
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+DJANGO_SETTINGS_MODULE=config.settings.development
+```
 
 ---
 
