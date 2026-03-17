@@ -75,18 +75,50 @@ node_modules       package.json       README.md          tsconfig.app.json  tsco
 
 ```bash
 ng add @angular/material
+
+✔ Determining Package Manager
+  › Using package manager: npm
+✔ Searching for compatible package version
+  › Found compatible package version: 21.2.2.
+✔ Loading package information
+✔ Confirming installation
+✔ Installing package
+✔ Select a pair of starter prebuilt color palettes for your Angular Material theme Rose/Red           [Preview: 
+https://material.angular.dev?theme=rose-red]
+UPDATE package.json (1101 bytes)
+✔ Packages installed successfully.
+UPDATE src/styles.scss (1257 bytes)
+UPDATE src/index.html (633 bytes)
+
 ```
 
 ### Animaciones
 
 ```bash
 npm install @angular/animations
+
+added 1 package, and audited 490 packages in 869ms
+
+109 packages are looking for funding
+  run `npm fund` for details
+
+2 high severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
 ```
 
 ### Variables de Entorno
 
 ```bash
 ng generate environments
+
+ng generate environments
+CREATE src/environments/environment.ts (31 bytes)
+CREATE src/environments/environment.development.ts (31 bytes)
+UPDATE angular.json (2514 bytes)
 ```
 
 ---
