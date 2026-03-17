@@ -50,6 +50,9 @@ python3 -m venv venv
 source venv/bin/activate  # macOS/Linux
 # venv\Scripts\activate   # Windows
 
+# A mi me gusta usar 
+mkvirtualenv boilerEnv
+
 # Instalar Django
 pip install django
 
@@ -499,6 +502,7 @@ urlpatterns = [
 ### JWT con SimpleJWT (opcional)
 
 ```bash
+aquí voy, pero se cae
 pip install djangorestframework-simplejwt
 ```
 
