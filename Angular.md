@@ -284,6 +284,25 @@ ng g directive shared/directives/example
 
 ## 🎨 Configuración del Layout
 
+Edita `src/app/app.ts` para importar los componentes de Header y Footer:
+
+```typescript 
+import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Footer } from './shared/ui/footer/footer';
+import { Header } from './shared/ui/header/header';
+
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet, Header, Footer],
+  templateUrl: './app.html',
+  styleUrl: './app.scss'
+})
+export class App {
+  protected readonly title = signal('angular-project');
+}
+```
+
 Edita `src/app/app.html` para definir el layout principal:
 
 ```html
@@ -598,15 +617,52 @@ https://docs.sentry.io/platforms/javascript/guides/angular/
 
 ```bash
 ng add @angular-eslint/schematics
+
+✔ Determining Package Manager
+  › Using package manager: npm
+✔ Searching for compatible package version
+  › Found compatible package version: 21.3.0.
+✔ Loading package information
+✔ Confirming installation
+✔ Installing package
+    
+    All angular-eslint dependencies have been successfully installed 🎉
+    
+    Please see https://github.com/angular-eslint/angular-eslint for how to add ESLint configuration to your project.
+    
+    We detected that you have a single project in your workspace and no existing linter wired up, so we are configuring ESLint for you automatically.
+    
+    Please see https://github.com/angular-eslint/angular-eslint for more information.
+    
+CREATE eslint.config.js (1004 bytes)
+UPDATE package.json (1532 bytes)
+UPDATE angular.json (2831 bytes)
+✔ Packages installed successfully.
 ```
 
 ### Prettier
 
 ```bash
 npm install --save-dev prettier
+
+up to date, audited 616 packages in 764ms
+
+144 packages are looking for funding
+  run `npm fund` for details
+
+2 high severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
 ```
 
 Crea `.prettierrc`:
+
+```bash
+touch .prettierrc
+```
 
 ```json
 {
