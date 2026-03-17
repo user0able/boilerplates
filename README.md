@@ -18,14 +18,15 @@
 
 ## 📚 Boilerplates Disponibles
 
-| Stack | Archivo | Estado | Descripción |
-|-------|---------|--------|-------------|
-| 🅰️ Angular | [Angular.md](Angular.md) | ✅ Completo | Frontend con Angular Material, lazy loading, interceptors |
-| 🐍 Django | [Django.md](Django.md) | ✅ Completo | Backend API REST con DRF, JWT, Swagger |
-| ⚛️ React | — | 🔜 Próximo | Frontend con Vite, React Router, Zustand |
-| 🟢 Node.js / Express | — | 🔜 Próximo | Backend API REST con Express, Prisma |
-| 🐳 Docker | — | 📋 Planeado | Docker Compose para Angular + Django |
-| 🔗 Fullstack | — | 📋 Planeado | Angular + Django integrados con Docker |
+| Stack               | Archivo                  | Estado     | Descripción                                               |
+| ------------------- | ------------------------ | ---------- | --------------------------------------------------------- |
+| 🅰️ Angular           | [Angular.md](Angular.md) | ✅ Completo | Frontend con Angular Material, lazy loading, interceptors |
+| 🐍 Django            | [Django.md](Django.md)   | ✅ Completo | Backend API REST con DRF, JWT, Swagger                    |
+| ⚛️ React             | —                        | 🔜 Próximo  | Frontend con Vite, React Router, Zustand                  |
+| 🟢 Node.js / Express | —                        | 🔜 Próximo  | Backend API REST con Express, Prisma                      |
+| 🐳 Docker            | —                        | 📋 Planeado | Docker Compose para Angular + Django                      |
+| 🖖 Vue.js            | [Vue.md](Vue.md)         | ✅ Completo | Frontend con Vue 3, Pinia, Vue Router, TanStack Query     |
+| 🔗 Fullstack         | —                        | 📋 Planeado | Angular + Django integrados con Docker                    |
 
 ---
 
@@ -37,21 +38,24 @@
 - [x] Boilerplate Django (DRF, JWT, settings por entorno, Swagger)
 - [x] README principal con roadmap
 
-### Fase 2 — Más Frameworks
+### Fase 2 — Más Frameworks ✅
 
-- [ ] **React.md** — Boilerplate con Vite + React + TypeScript
+- [x] **React.md** — Boilerplate con Vite + React + TypeScript
   - React Router v7, Zustand, TanStack Query
   - Estructura feature-based similar a Angular
-- [ ] **Node.md** — Backend con Express + TypeScript
+- [x] **Node.md** — Backend con Express + TypeScript
   - Prisma ORM, validación con Zod
   - Estructura por capas (controllers, services, repositories)
+- [x] **Vue.md** — Boilerplate con Vite + Vue 3 + TypeScript
+  - Vue Router, Pinia con persistencia, TanStack Query
+  - Composables, VueUse, opciones para Vuetify/Tailwind
 - [ ] **Next.md** — Fullstack con Next.js + App Router
   - Server Components, Server Actions
   - Auth con NextAuth.js
 
-### Fase 3 — DevOps & Infraestructura
+### Fase 3 — DevOps & Infraestructura ✅
 
-- [ ] **Docker.md** — Docker Compose para cada stack
+- [x] **Docker.md** — Docker Compose para cada stack
   - Dockerfile optimizados con multi-stage builds
   - Compose para desarrollo local (hot reload)
   - Compose para producción
@@ -59,12 +63,13 @@
   - GitHub Actions para lint, test, build, deploy
   - Configuraciones para Angular, Django, React, Node
 
-### Fase 4 — Integraciones
+### Fase 4 — Integraciones ✅
 
-- [ ] **Fullstack.md** — Angular + Django integrados
+- [x] **Fullstack.md** — Angular + Django / React + Node integrados
   - Comunicación frontend-backend
   - Autenticación compartida (JWT)
   - Docker Compose unificado
+  - Nginx reverse proxy para producción
 - [ ] **Testing.md** — Estrategias de testing por stack
   - Unit, integration, e2e
   - Jest, Pytest, Cypress/Playwright
@@ -88,9 +93,9 @@
 
 ### Prioridad Media 🟡
 
-- [ ] Boilerplate React (Vite + TypeScript)
-- [ ] Boilerplate Node.js (Express + TypeScript)
-- [ ] Docker Compose para Angular + Django
+- [x] ~~Boilerplate React (Vite + TypeScript)~~
+- [x] ~~Boilerplate Node.js (Express + TypeScript)~~
+- [x] ~~Docker Compose para Angular + Django~~
 - [ ] GitHub Actions básico (lint + test)
 
 ### Prioridad Baja 🟢
@@ -125,8 +130,13 @@
 ```
 boilerplates/
 ├── README.md          # ← Estás aquí
-├── Angular.md         # Guía completa de Angular
-├── Django.md          # Guía completa de Django
+├── Angular.md         # Frontend — Angular + Material + RxJS
+├── React.md           # Frontend — React + Vite + Zustand + TanStack Query
+├── Vue.md             # Frontend — Vue 3 + Pinia + Vue Router + TanStack Query
+├── Django.md          # Backend  — Django + DRF + JWT + Swagger
+├── Node.md            # Backend  — Express + TypeScript + Prisma + Zod
+├── Docker.md          # DevOps   — Dockerfiles + Compose para cada stack
+├── Fullstack.md       # Integración — Frontend + Backend + DB + Docker
 └── ...                # Futuras guías
 ```
 
