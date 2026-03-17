@@ -22,10 +22,10 @@
 | ------------------- | ---------------------------- | ---------- | --------------------------------------------------------- |
 | 🅰️ Angular           | [Angular.md](Angular.md)     | ✅ Completo | Frontend con Angular Material, lazy loading, interceptors |
 | 🐍 Django            | [Django.md](Django.md)       | ✅ Completo | Backend API REST con DRF, JWT, Swagger                    |
-| ⚛️ React             | [React.md](React.md)         | 🔜 Próximo  | Frontend con Vite, React Router, Zustand                  |
-| 🟢 Node.js / Express | [Node.md](Node.md)           | 🔜 Próximo  | Backend API REST con Express, Prisma                      |
+| ⚛️ React             | [React.md](React.md)         | 📋 Planeado | Frontend con Vite, React Router, Zustand                  |
+| 🟢 Node.js / Express | [Node.md](Node.md)           | 📋 Planeado | Backend API REST con Express, Prisma                      |
 | 🐳 Docker            | [Docker.md](Docker.md)       | 📋 Planeado | Docker Compose para Angular + Django                      |
-| 🖖 Vue.js            | [Vue.md](Vue.md)             | ✅ Completo | Frontend con Vue 3, Pinia, Vue Router, TanStack Query     |
+| 🖖 Vue.js            | [Vue.md](Vue.md)             | 📋 Planeado | Frontend con Vue 3, Pinia, Vue Router, TanStack Query     |
 | 🔗 Fullstack         | [Fullstack.md](Fullstack.md) | 📋 Planeado | Angular + Django integrados con Docker                    |
 
 ---
