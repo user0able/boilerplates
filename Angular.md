@@ -791,6 +791,16 @@ Añade estos scripts a tu `package.json`:
 - [ ] **Husky hooks** — verificar que el directorio `.husky/` existe y que el hook `pre-commit` ejecuta `lint-staged`. (Husky está instalado pero los hooks pueden no haberse inicializado.)
 - [ ] **`npm audit fix`** — resolver las vulnerabilidades identificadas que no requieran `--force`.
 
+### 🟣 Mejoras Adicionales
+
+- [ ] **PWA (Progressive Web App)** — evaluar `@angular/pwa` para soporte offline con Service Workers y manifest.
+- [ ] **Storybook** — configurar Storybook para documentar y desarrollar componentes UI de forma aislada.
+- [ ] **Tailwind CSS o Angular CDK** — evaluar si complementar Angular Material con utilidades de Tailwind o usar CDK para componentes custom.
+- [ ] **Animaciones de transición entre rutas** — implementar animaciones con `@angular/animations` para transiciones suaves entre páginas.
+- [ ] **SEO y Meta Tags** — configurar `Meta` y `Title` services para actualizar meta tags dinámicamente por ruta (importante para SSR).
+- [ ] **Error Boundary global** — implementar `ErrorHandler` personalizado para capturar errores no manejados y mostrar UI de fallback.
+- [ ] **Configurar `lint-staged`** — crear `.lintstagedrc` para ejecutar ESLint y Prettier solo en archivos staged antes del commit.
+
 ---
 
 > **Hane Boilerplates** — Angular Setup Guide

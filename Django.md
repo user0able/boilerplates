@@ -206,6 +206,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "rest_framework_simplejwt",
     "corsheaders",
     "django_filters",
     "drf_spectacular",
@@ -302,6 +303,7 @@ SPECTACULAR_SETTINGS = {
 
 ```python
 from .base import *  # noqa: F401, F403
+from .base import BASE_DIR
 
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
@@ -316,11 +318,15 @@ DATABASES = {
 CORS_ALLOW_ALL_ORIGINS = True
 ```
 
+> **Nota:** El import explícito `from .base import BASE_DIR` evita el error F405 de ruff cuando se usa `BASE_DIR` desde un star import.
+
 ### `config/settings/production.py`
 
 ```python
-from .base import *  # noqa: F401, F403
 import sentry_sdk
+
+from .base import *  # noqa: F401, F403
+from .base import env
 
 DEBUG = False
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
@@ -892,6 +898,7 @@ DJANGO_SETTINGS_MODULE=config.settings.development
 
 - [ ] **Crear superusuario** — ejecutar `python manage.py createsuperuser` para poder acceder a `/admin/`.
 - [x] **Tests reales** — ~~todos los `tests.py` están vacíos~~. Implementados tests de modelo, serializer y endpoint para `User` (9 tests).
+- [x] **`rest_framework_simplejwt` en `INSTALLED_APPS`** — faltaba en `THIRD_PARTY_APPS`. Añadido para que SimpleJWT funcione correctamente.
 
 ### 🟠 Seguridad y Producción
 
@@ -926,6 +933,19 @@ DJANGO_SETTINGS_MODULE=config.settings.development
 
 - [ ] **README.md del proyecto** — crear un `README.md` dentro de `djangoproject/` con instrucciones de setup, variables de entorno requeridas, y comandos disponibles en el Makefile.
 - [ ] **Documentar la API** — mejorar `SPECTACULAR_SETTINGS` con descripciones detalladas, tags por app, y ejemplos de request/response.
+
+### 🟣 Mejoras Adicionales
+
+- [ ] **Endpoint de cambio de contraseña** — `POST /api/v1/auth/password/change/` para usuarios autenticados.
+- [ ] **Endpoint de reset de contraseña** — flujo completo con envío de email y token de restablecimiento.
+- [ ] **Validación de email único** — asegurar que el campo `email` sea único en el modelo `User` y validado en el serializer.
+- [ ] **Soft delete** — implementar borrado lógico en `TimeStampedModel` con campo `is_active` o `deleted_at` y manager custom.
+- [ ] **Versionado de API** — evaluar `drf-spectacular` con namespacing por versión (`/api/v1/`, `/api/v2/`) o usar `AcceptHeaderVersioning`.
+- [ ] **django-storages** — configurar para almacenamiento de archivos en S3/GCS en producción en lugar de filesystem local.
+- [ ] **Cache con Redis** — configurar `django-redis` como backend de caché para mejorar rendimiento en producción.
+- [ ] **Management commands custom** — crear comandos como `seed_db` para datos de prueba y `wait_for_db` para Docker.
+- [ ] **CORS preflight cache** — añadir `CORS_PREFLIGHT_MAX_AGE` en producción para cachear respuestas OPTIONS.
+- [ ] **Coverage de tests** — configurar `pytest-cov` y establecer umbral mínimo de cobertura (e.g., 80%).
 
 ---
 
